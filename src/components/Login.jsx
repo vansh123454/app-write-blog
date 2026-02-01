@@ -5,10 +5,11 @@ import { useDispatch } from "react-redux";
 import { Button, Input, Logo } from "./index";
 import authService from "../appwriteServices/auth";
 import { useForm } from "react-hook-form";
+
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm(); 
+  const { register, handleSubmit } = useForm();
   const [error, setError] = useState("");
 
   const login = async (data) => {
@@ -26,53 +27,66 @@ function Login() {
   };
 
   return (
-    <div>
-      <div>
-        <div>
-          <span>
-            <Logo />
-          </span>
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200 px-4">
+      <div className="w-full max-w-md rounded-3xl bg-white p-10 shadow-2xl">
+        {/* Logo */}
+        <div className="mb-8 flex justify-center">
+          <Logo />
         </div>
-        <h2>Sign into your account</h2>
-        <p>
-          Don't have any account
-          <Link to="/signup" className="">
+
+        {/* Heading */}
+        <h2 className="mb-3 text-center text-3xl font-bold tracking-tight text-gray-900">
+          Sign in to your account
+        </h2>
+
+        <p className="mb-8 text-center text-sm text-gray-600">
+          Don&apos;t have an account?{" "}
+          <Link
+            to="/signup"
+            className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+          >
             Sign up
           </Link>
         </p>
-        {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleSubmit(login)}>
-          <div>
-            <Input
-              label="Email: "
-              placeholder="Enter your email"
-              type="email"
-              {...register("email", {
-                required: true,
-                validate: {
-                  matchPattern: (value) =>
-                    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Email must be valid",
-                },
-              })}
-            />
 
-            <Input
-            label = "Password"
-            type = "password"
-            placeholder = "Enter your Password"
-            {...register("password",{
+        {/* Error */}
+        {error && (
+          <p className="mb-5 rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-600">
+            {error}
+          </p>
+        )}
+
+        {/* Form */}
+        <form onSubmit={handleSubmit(login)} className="space-y-6">
+          <Input
+            label="Email add"
+            placeholder="Enter your email"
+            type="email"
+            {...register("email", {
+              required: true,
+              validate: {
+                matchPattern: (value) =>
+                  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ||
+                  "Email must be valid",
+              },
+            })}
+          />
+
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            {...register("password", {
               required: true,
             })}
-             />
+          />
 
-             <Button
-             type="sumbit"
-             className="w-full cursor-pointer"
-             >
-              Sign In
-             </Button>
-
-          </div>
+          <Button
+            type="submit"
+            className="w-full rounded-xl bg-blue-600 py-3 text-base font-semibold text-white transition-all duration-200 hover:bg-blue-700 active:scale-[0.98]"
+          >
+            Sign In
+          </Button>
         </form>
       </div>
     </div>
